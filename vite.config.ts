@@ -7,12 +7,10 @@ export default defineConfig(({ command, mode }) => {
   
   return {
     plugins: [react()],
-    // Para GH Pages, si construyes desde un subdirectorio (ej. github.com/user/repo), usa '/repo/'
-    // Usar base './' suele fallar en history fallbacks de SPA en github pages.
-    // Usar base: process.env.BASE_URL || '/'  te permite inyectar la base en el workflow
-    base: process.env.VITE_BASE_URL || '/',
+    // Base relativa es la forma más estable para páginas sin React Router en GitHub Pages
+    base: './',
     define: {
-      'process.env.API_KEY': JSON.stringify(env.API_KEY)
+      'process.env.API_KEY': JSON.stringify(env.API_KEY || '')
     }
   };
 });
