@@ -36,10 +36,13 @@ const DustParticles: React.FC = () => {
 };
 
 const CustomCursor: React.FC = () => {
-  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [position, setPosition] = useState({ x: -100, y: -100 });
   const [isHovering, setIsHovering] = useState(false);
 
   React.useEffect(() => {
+    // Add global class to hide the default cursor on desktop
+    document.documentElement.classList.add('hide-default-cursor');
+    
     const handleMouseMove = (e: MouseEvent) => {
       setPosition({ x: e.clientX, y: e.clientY });
     };
@@ -54,6 +57,7 @@ const CustomCursor: React.FC = () => {
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('mouseover', handleMouseOver);
     return () => {
+      document.documentElement.classList.remove('hide-default-cursor');
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseover', handleMouseOver);
     };
@@ -61,15 +65,34 @@ const CustomCursor: React.FC = () => {
 
   return (
     <motion.div
-      className="fixed top-0 left-0 w-6 h-6 border border-gold/50 rounded-full pointer-events-none z-[9999] hidden md:block"
+      className="fixed top-0 left-0 pointer-events-none z-[9999] hidden md:block"
       animate={{
-        x: position.x - 12,
-        y: position.y - 12,
-        scale: isHovering ? 1.5 : 1,
-        backgroundColor: isHovering ? 'rgba(197, 160, 101, 0.1)' : 'transparent',
+        x: position.x - 2,
+        y: position.y - 2,
+        rotate: isHovering ? -15 : 0,
+        scale: isHovering ? 1.2 : 1,
       }}
-      transition={{ type: 'spring', damping: 20, stiffness: 250, mass: 0.5 }}
-    />
+      transition={{ 
+        type: 'spring', 
+        stiffness: 800, 
+        damping: 35, 
+        mass: 0.1 
+      }}
+    >
+      <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ filter: isHovering ? 'drop-shadow(0px 0px 8px rgba(197, 160, 101, 1))' : 'drop-shadow(0px 0px 4px rgba(197, 160, 101, 0.6))', transformOrigin: 'top left' }}>
+        {/* Hoja del facón (Blade) */}
+        <path d="M2.5 2.5 L14 18 C15 19 13.5 20.5 12 21 L11 20 C10 19 9 19 8 18 L2.5 2.5" fill="#e5e5e5" stroke="#C5A065" strokeWidth="1" />
+        {/* Plenitud de la hoja (Detalle central) */}
+        <line x1="4" y1="4" x2="11" y2="17" stroke="#999" strokeWidth="0.5" />
+        {/* Gavilán (Guard) */}
+        <path d="M12 16 L18 22" stroke="#1A1108" strokeWidth="2.5" strokeLinecap="round" />
+        <path d="M12 16 L18 22" stroke="#C5A065" strokeWidth="1" strokeLinecap="round" />
+        {/* Mango (Handle) */}
+        <path d="M15 19 L22 26 C23 27 24 28 23.5 28.5 C23 29 22 28 21 27 L14 20" fill="#3A2A1E" stroke="#C5A065" strokeWidth="1.5" />
+        {/* Pomo (Pommel) */}
+        <circle cx="23.5" cy="28.5" r="1.5" fill="#C5A065" />
+      </svg>
+    </motion.div>
   );
 };
 
