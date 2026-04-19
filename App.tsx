@@ -575,27 +575,27 @@ const App: React.FC = () => {
                       
                       <button 
                         onClick={() => setIsAdmissionModalOpen(true)}
-                        className="relative px-20 py-8 bg-[#F5F5DC] text-void font-display font-black text-sm md:text-base uppercase tracking-[0.6em] hover:scale-105 transition-all shadow-[0_0_60px_rgba(245,245,220,0.2)] overflow-hidden group border-b-4 border-gold/40"
+                        className="relative px-12 sm:px-20 py-8 bg-gradient-to-r from-[#C5A065] via-[#E8D19F] to-[#C5A065] text-void font-display font-black text-sm md:text-base uppercase tracking-[0.4em] sm:tracking-[0.6em] hover:scale-110 transition-all duration-500 shadow-[0_0_50px_rgba(197,160,101,0.6)] hover:shadow-[0_0_100px_rgba(197,160,101,1)] overflow-hidden group border-b-4 border-[#8A6D3B]"
                       >
                         {/* Guardapampa detail on button - Top and Bottom */}
-                        <div className="absolute top-0 left-0 w-full h-1.5 bg-void/5 overflow-hidden">
-                          <div className="guardapampa-divider h-full opacity-30 scale-y-50"></div>
+                        <div className="absolute top-0 left-0 w-full h-1.5 bg-void/10 overflow-hidden">
+                          <div className="guardapampa-divider h-full opacity-50 scale-y-50"></div>
                         </div>
-                        <div className="absolute bottom-0 left-0 w-full h-1.5 bg-void/5 overflow-hidden">
-                          <div className="guardapampa-divider h-full opacity-30 scale-y-50"></div>
+                        <div className="absolute bottom-0 left-0 w-full h-1.5 bg-void/10 overflow-hidden">
+                          <div className="guardapampa-divider h-full opacity-50 scale-y-50"></div>
                         </div>
                         
                         {/* Subtle Guardapampa Background Pattern */}
-                        <div className="absolute inset-0 opacity-[0.04] pointer-events-none guardapampa-divider scale-125 -rotate-6"></div>
+                        <div className="absolute inset-0 opacity-[0.1] pointer-events-none guardapampa-divider scale-125 -rotate-6"></div>
                         
-                        <span className="relative z-10 flex items-center gap-6">
-                          <div className="w-8 h-px bg-void/20 group-hover:w-12 transition-all duration-500"></div>
+                        <span className="relative z-10 flex items-center gap-4 sm:gap-6 drop-shadow-[0_2px_2px_rgba(255,255,255,0.3)]">
+                          <div className="w-6 sm:w-8 h-[2px] bg-void/40 group-hover:w-10 sm:group-hover:w-16 transition-all duration-500"></div>
                           QUIERO APRENDER
-                          <div className="w-8 h-px bg-void/20 group-hover:w-12 transition-all duration-500"></div>
+                          <div className="w-6 sm:w-8 h-[2px] bg-void/40 group-hover:w-10 sm:group-hover:w-16 transition-all duration-500"></div>
                         </span>
                         
                         {/* Hover shine effect */}
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/80 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out"></div>
                       </button>
                     </div>
                     <p className="mt-12 text-[0.6rem] md:text-[0.7rem] text-stone-600 tracking-[0.5em] uppercase italic font-bold">Admisión bajo estricto código de conducta.</p>

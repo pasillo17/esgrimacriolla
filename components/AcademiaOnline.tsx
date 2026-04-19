@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import RevealOnScroll from './RevealOnScroll';
+import { motion, AnimatePresence } from 'motion/react';
+import { X, Lock, KeyRound } from 'lucide-react';
 
 interface AcademiaOnlineProps {
   onBack: () => void;
@@ -36,6 +38,42 @@ const COURSES = [
 ];
 
 const AcademiaOnline: React.FC<AcademiaOnlineProps> = ({ onBack }) => {
+  const [showPasswordModal, setShowPasswordModal] = useState(false);
+  const [password, setPassword] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+
+  const handleEnrollClick = (course: typeof COURSES[0]) => {
+    if (course.id === 1) {
+      // Abre el modal para el curso de monitor
+      setShowPasswordModal(true);
+      setPassword('');
+      setPasswordError('');
+    } else if (course.id === 3) {
+      window.open('https://www.unca.edu.ar/cursosextension', '_blank');
+    } else {
+      const message = `Buenas quiero consultar por ${course.title}`;
+      navigator.clipboard.writeText(message).then(() => {
+        window.open('https://ig.me/m/esgrima_criolla', '_blank');
+      }).catch(() => {
+        window.open('https://ig.me/m/esgrima_criolla', '_blank');
+      });
+    }
+  };
+
+  const handleAccessSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Contraseña estática predefinida para el curso
+    if (password === 'facon2024') {
+      setPasswordError('');
+      // Si la contraseña es correcta, abrir la URL del contenido del curso
+      // Aquí puedes colocar el enlace de Drive, YouTube Privado, etc.
+      window.open('https://www.youtube.com/playlist?list=PLpTBbyvUiihsBfP0hfCPw7pZNdcLMXbrC', '_blank');
+      setShowPasswordModal(false);
+    } else {
+      setPasswordError('Contraseña incorrecta. El acero rechaza tu entrada.');
+    }
+  };
+
   return (
     <div className="min-h-screen bg-void text-stone-300 selection:bg-gold selection:text-void paper-texture pt-24 pb-12 overflow-x-hidden">
       {/* Vignette Overlay */}
@@ -128,25 +166,14 @@ const AcademiaOnline: React.FC<AcademiaOnlineProps> = ({ onBack }) => {
                   </div>
 
                   <button 
-                    onClick={() => {
-                      if (course.id === 3) {
-                        window.open('https://www.unca.edu.ar/cursosextension', '_blank');
-                      } else {
-                        const message = `Buenas quiero consultar por ${course.title}`;
-                        navigator.clipboard.writeText(message).then(() => {
-                          window.open('https://ig.me/m/esgrima_criolla', '_blank');
-                        }).catch(() => {
-                          window.open('https://ig.me/m/esgrima_criolla', '_blank');
-                        });
-                      }
-                    }}
-                    className="relative w-full py-4 bg-void border border-gold/40 text-gold font-display font-bold text-[0.7rem] uppercase tracking-[0.3em] overflow-hidden group transition-all duration-300 hover:scale-[1.02] hover:border-gold hover:bg-gold/5 shadow-[0_0_15px_rgba(212,175,55,0.1)] hover:shadow-[0_0_20px_rgba(212,175,55,0.25)] mt-auto"
+                    onClick={() => handleEnrollClick(course)}
+                    className="relative w-full py-4 bg-void border border-gold/40 text-gold font-display font-bold text-[0.7rem] uppercase tracking-[0.3em] overflow-hidden group/signup transition-all duration-300 hover:scale-[1.02] hover:border-gold hover:bg-gold/5 shadow-[0_0_15px_rgba(212,175,55,0.1)] hover:shadow-[0_0_20px_rgba(212,175,55,0.25)] mt-auto"
                   >
                     <span className="relative z-10 flex items-center justify-center gap-2">
-                      INSCRIBIRSE
-                      <span className="material-icons-outlined text-sm group-hover:translate-x-1 transition-transform duration-300">east</span>
+                       {course.id === 1 ? 'ACCEDER' : 'INSCRIBIRSE'}
+                      {course.id === 1 ? <Lock className="w-4 h-4" /> : <span className="material-icons-outlined text-sm group-hover/signup:translate-x-1 transition-transform duration-300">east</span>}
                     </span>
-                    <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-gold/20 to-transparent group-hover:translate-x-full transition-transform duration-700 ease-in-out"></div>
+                    <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-gold/20 to-transparent group-hover/signup:translate-x-full transition-transform duration-700 ease-in-out"></div>
                   </button>
                 </div>
               </div>
@@ -193,6 +220,72 @@ const AcademiaOnline: React.FC<AcademiaOnlineProps> = ({ onBack }) => {
           </div>
         </RevealOnScroll>
       </div>
+
+      {/* Curso Password Modal */}
+      <AnimatePresence>
+        {showPasswordModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[1000] flex items-center justify-center px-4 bg-black/80 backdrop-blur-sm"
+          >
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.95, opacity: 0, y: 20 }}
+              className="bg-card-depth border border-gold/30 p-8 md:p-12 max-w-md w-full relative shadow-[0_0_50px_rgba(197,160,101,0.15)]"
+            >
+              <button 
+                onClick={() => setShowPasswordModal(false)}
+                className="absolute top-4 right-4 text-stone-500 hover:text-gold transition-colors"
+                aria-label="Cerrar modal"
+              >
+                <X className="w-6 h-6" />
+              </button>
+              
+              <div className="text-center mb-8">
+                <div className="w-16 h-16 rounded-full border border-gold/30 flex items-center justify-center mx-auto mb-6 bg-[#1A1108]">
+                   <KeyRound className="w-8 h-8 text-gold" />
+                </div>
+                <h3 className="font-display text-2xl text-stone-100 uppercase tracking-widest mb-2">Área Restringida</h3>
+                <p className="font-serif text-sm text-stone-400 italic">
+                  Ingrese la contraseña para acceder al contenido del Curso de Monitor de Esgrima Criolla.
+                </p>
+              </div>
+
+              <form onSubmit={handleAccessSubmit} className="space-y-6">
+                <div>
+                  <input 
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Contraseña secreta"
+                    className="w-full bg-[#1A1108] border border-stone-800 text-stone-200 px-4 py-3 font-serif focus:outline-none focus:border-gold/50 transition-colors text-center"
+                    autoFocus
+                  />
+                  {passwordError && (
+                    <motion.p 
+                      initial={{ opacity: 0, y: -5 }} animate={{ opacity: 1, y: 0 }}
+                      className="text-red-400/90 text-xs text-center mt-3 font-serif"
+                    >
+                      {passwordError}
+                    </motion.p>
+                  )}
+                </div>
+
+                <button 
+                  type="submit"
+                  className="w-full relative py-4 bg-void border border-gold/50 text-gold font-display font-bold text-xs uppercase tracking-[0.2em] overflow-hidden group transition-all duration-300 hover:bg-gold hover:text-void shadow-[0_0_15px_rgba(212,175,55,0.15)]"
+                >
+                  <span className="relative z-10">Ingresar al Recinto</span>
+                </button>
+              </form>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
     </div>
   );
 };
