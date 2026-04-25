@@ -15,7 +15,9 @@ const LOCATIONS = [
     image: 'https://images.unsplash.com/photo-1543429776-2782fc8e1acd?q=80&w=2070&auto=format&fit=crop',
     instructor: 'Maestro Jorge Prina',
     mapUrl: 'https://www.google.com/maps/search/?api=1&query=Mitre+1851,+CABA',
-    instagramUrl: 'https://www.instagram.com/esgrima_criolla' // Cambiar por el Instagram específico de la sede
+    contactUrl: 'https://www.instagram.com/esgrima_criolla',
+    contactIcon: 'camera_alt',
+    contactText: 'Contactar'
   },
   {
     id: 4,
@@ -26,7 +28,9 @@ const LOCATIONS = [
     image: 'https://images.unsplash.com/photo-1589909202802-8f4aadce1849?q=80&w=1935&auto=format&fit=crop',
     instructor: 'Inst. Augusto Miranda',
     mapUrl: 'https://maps.app.goo.gl/vQTk5ugv5eXhjrMt9',
-    instagramUrl: 'https://www.instagram.com/agus_esgrimacriolla/' // Cambiar por el Instagram específico de la sede
+    contactUrl: 'https://wa.me/5491162086574?text=Buenas%20y%20santas%2C%20quiero%20solicitar%20informaci%C3%B3n%20sobre%20la%20Sede%20Lanus',
+    contactIcon: 'chat',
+    contactText: 'Contactar (WA)'
   },
   {
     id: 3,
@@ -37,7 +41,9 @@ const LOCATIONS = [
     image: 'https://upload.wikimedia.org/wikipedia/commons/2/28/Plaza_Juan_Jos%C3%A9_Paso.jpg',
     instructor: 'Inst. Eliseo Dulon',
     mapUrl: 'https://www.google.com/maps/search/?api=1&query=Plaza+Juan+Jose+Paso,+Moldes+1300',
-    instagramUrl: 'https://www.instagram.com/esgrima_criolla_belgrano/' // Cambiar por el Instagram específico de la sede
+    contactUrl: 'https://wa.me/5491135197663?text=Buenas%20y%20santas%2C%20quiero%20solicitar%20informaci%C3%B3n%20sobre%20la%20Sede%20Belgrano',
+    contactIcon: 'chat',
+    contactText: 'Contactar (WA)'
   },
   {
     id: 2,
@@ -48,7 +54,48 @@ const LOCATIONS = [
     image: 'https://turismo.buenosaires.gob.ar/sites/turismo/files/parque_rivadavia_1200_0.jpg',
     instructor: 'Inst. Luisina Montero',
     mapUrl: 'https://www.google.com/maps/search/?api=1&query=Parque+Rivadavia,+CABA',
-    instagramUrl: 'https://www.instagram.com/esgrimacriolla.caballito/' // Cambiar por el Instagram específico de la sede
+    contactUrl: 'https://www.instagram.com/esgrimacriolla.caballito/',
+    contactIcon: 'camera_alt',
+    contactText: 'Contactar (IG)'
+  },
+  {
+    id: 5,
+    city: 'La Plata',
+    name: 'Sede La Plata',
+    address: 'Sindicato Gráfico',
+    schedule: 'A confirmar',
+    image: 'https://images.unsplash.com/photo-1542382156909-9ae37b3f56fd?q=80&w=2056&auto=format&fit=crop',
+    instructor: 'A confirmar',
+    mapUrl: 'https://www.google.com/maps/search/?api=1&query=Sindicato+Grafico,+La+Plata',
+    contactUrl: 'https://www.instagram.com/esgrima_criolla',
+    contactIcon: 'camera_alt',
+    contactText: 'Contactar'
+  },
+  {
+    id: 6,
+    city: 'Mar del Plata',
+    name: 'Sede Mar del Plata',
+    address: 'A confirmar',
+    schedule: 'A confirmar',
+    image: 'https://images.unsplash.com/photo-1596752003714-c3e0618cefa0?q=80&w=2070&auto=format&fit=crop',
+    instructor: 'A confirmar',
+    mapUrl: 'https://www.google.com/maps/search/?api=1&query=Mar+del+Plata',
+    contactUrl: 'https://www.instagram.com/esgrima_criolla',
+    contactIcon: 'camera_alt',
+    contactText: 'Contactar'
+  },
+  {
+    id: 7,
+    city: 'Bariloche',
+    name: 'Sede Bariloche',
+    address: 'A confirmar',
+    schedule: 'A confirmar',
+    image: 'https://images.unsplash.com/photo-1544085311-11a028465b03?q=80&w=2070&auto=format&fit=crop',
+    instructor: 'A confirmar',
+    mapUrl: 'https://www.google.com/maps/search/?api=1&query=Bariloche',
+    contactUrl: 'https://www.instagram.com/esgrima_criolla',
+    contactIcon: 'camera_alt',
+    contactText: 'Contactar'
   }
 ];
 
@@ -123,13 +170,13 @@ const Sedes: React.FC<SedesProps> = ({ onBack }) => {
                       Ver en Mapa
                     </a>
                     <a 
-                      href={sede.instagramUrl}
+                      href={sede.contactUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="w-full py-3 bg-gold/10 border border-gold/20 text-gold font-display text-[0.6rem] uppercase tracking-[0.3em] hover:bg-gold/20 hover:border-gold/60 transition-all flex items-center justify-center gap-2"
                     >
-                      <span className="material-icons-outlined text-sm">camera_alt</span>
-                      Contactar
+                      <span className="material-icons-outlined text-sm">{sede.contactIcon}</span>
+                      {sede.contactText}
                     </a>
                   </div>
                 </div>

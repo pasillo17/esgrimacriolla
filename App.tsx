@@ -777,19 +777,24 @@ const App: React.FC = () => {
 
               <div className="grid grid-cols-1 gap-4">
                 {[
-                  { name: 'SEDE CABA (CENTRAL)', location: 'Mitre 1851, CABA', schedule: 'Sábados 10:00 - 12:00', icon: MapPin },
-                  { name: 'SEDE LANÚS', location: 'Gym ESN, Enrique Fernandez 2066', schedule: 'Mar y Jue 8:30hs • Lun y Vie 19:00hs', icon: Dumbbell },
-                  { name: 'SEDE BELGRANO', location: 'Plaza Juan Jose Paso, Moldes 1300', schedule: 'Jueves 19:00 - 21:00', icon: Trees },
-                  { name: 'SEDE CABALLITO', location: 'Parque Rivadavia, CABA', schedule: 'Miércoles 19:00 - 20:00', icon: MapPin },
-                  { name: 'SEDE LA PLATA', location: 'Casa Pulsar / Plaza Malvinas', schedule: 'Lun 20:30hs • Mar 15:00hs', icon: Landmark },
-                  { name: 'VIRTUAL', location: 'Online (Zoom/Meet)', schedule: 'A coordinar', icon: Globe }
+                  { name: 'SEDE CABA (CENTRAL)', location: 'Mitre 1851, CABA', schedule: 'Sábados 10:00 - 12:00', icon: MapPin, type: 'wa', phone: '5492216246179', msg: 'Buenas y santas quiero entrenar en CABA (Central)' },
+                  { name: 'SEDE LANÚS', location: 'Gym ESN, Enrique Fernandez 2066', schedule: 'Mar y Jue 8:30hs • Lun y Vie 19:00hs', icon: Dumbbell, type: 'wa', phone: '5491162086574', msg: 'Buenas y santas, quiero solicitar información sobre la Sede Lanus' },
+                  { name: 'SEDE BELGRANO', location: 'Plaza Juan Jose Paso, Moldes 1300', schedule: 'Jueves 19:00 - 21:00', icon: Trees, type: 'wa', phone: '5491135197663', msg: 'Buenas y santas, quiero solicitar información sobre la Sede Belgrano' },
+                  { name: 'SEDE CABALLITO', location: 'Parque Rivadavia, CABA', schedule: 'Miércoles 19:00 - 20:00', icon: MapPin, type: 'ig', url: 'https://www.instagram.com/esgrimacriolla.caballito/' },
+                  { name: 'SEDE LA PLATA', location: 'Sindicato Gráfico', schedule: 'A confirmar', icon: Landmark, type: 'wa', phone: '5492216246179', msg: 'Buenas y santas quiero entrenar en Sede La Plata' },
+                  { name: 'SEDE MAR DEL PLATA', location: 'A confirmar', schedule: 'A confirmar', icon: MapPin, type: 'wa', phone: '5492216246179', msg: 'Buenas y santas quiero entrenar en Sede Mar del Plata' },
+                  { name: 'SEDE BARILOCHE', location: 'A confirmar', schedule: 'A confirmar', icon: MapPin, type: 'wa', phone: '5492216246179', msg: 'Buenas y santas quiero entrenar en Sede Bariloche' },
+                  { name: 'VIRTUAL', location: 'Online (Zoom/Meet)', schedule: 'A coordinar', icon: Globe, type: 'wa', phone: '5492216246179', msg: 'Buenas y santas quiero información sobre clases virtuales' }
                 ].map((sede) => (
                   <button
                     key={sede.name}
                     onClick={() => {
-                      const message = `Buenas y santas quiero entrenar en ${sede.name}`;
-                      const whatsappUrl = `https://api.whatsapp.com/send?phone=5492216246179&text=${encodeURIComponent(message)}`;
-                      window.open(whatsappUrl, '_blank');
+                      if (sede.type === 'wa' && sede.phone && sede.msg) {
+                        const whatsappUrl = `https://api.whatsapp.com/send?phone=${sede.phone}&text=${encodeURIComponent(sede.msg)}`;
+                        window.open(whatsappUrl, '_blank');
+                      } else if (sede.type === 'ig' && sede.url) {
+                        window.open(sede.url, '_blank');
+                      }
                       setIsAdmissionModalOpen(false);
                     }}
                     className="group relative flex items-center gap-6 p-6 border border-gold/5 bg-void/30 hover:bg-gold/5 transition-all duration-500 text-left"
