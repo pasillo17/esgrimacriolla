@@ -48,6 +48,12 @@ const AcademiaOnline: React.FC<AcademiaOnlineProps> = ({ onBack }) => {
       setShowPasswordModal(true);
       setPassword('');
       setPasswordError('');
+    } else if (course.id === 2) {
+      // Redirige a WhatsApp con un mensaje personalizado
+      const message = `Buenas y santas, quiero solicitar información sobre las Clases Personalizadas Online de Esgrima Criolla.`;
+      const phoneNumber = '5491100000000'; // REEMPLAZAR POR TU NÚMERO
+      const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+      window.open(whatsappUrl, '_blank');
     } else if (course.id === 3) {
       window.open('https://www.unca.edu.ar/cursosextension', '_blank');
     } else {
