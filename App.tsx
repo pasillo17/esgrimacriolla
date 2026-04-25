@@ -782,8 +782,8 @@ const App: React.FC = () => {
                   { name: 'SEDE BELGRANO', location: 'Plaza Juan Jose Paso, Moldes 1300', schedule: 'Jueves 19:00 - 21:00', icon: Trees, type: 'wa', phone: '5491135197663', msg: 'Buenas y santas, quiero solicitar información sobre la Sede Belgrano' },
                   { name: 'SEDE CABALLITO', location: 'Parque Rivadavia, CABA', schedule: 'Miércoles 19:00 - 20:00', icon: MapPin, type: 'ig', url: 'https://www.instagram.com/esgrimacriolla.caballito/' },
                   { name: 'SEDE LA PLATA', location: 'Sindicato Gráfico', schedule: 'A confirmar', icon: Landmark, type: 'wa', phone: '5492216246179', msg: 'Buenas y santas quiero entrenar en Sede La Plata' },
-                  { name: 'SEDE MAR DEL PLATA', location: 'A confirmar', schedule: 'A confirmar', icon: MapPin, type: 'wa', phone: '5492216246179', msg: 'Buenas y santas quiero entrenar en Sede Mar del Plata' },
-                  { name: 'SEDE BARILOCHE', location: 'A confirmar', schedule: 'A confirmar', icon: MapPin, type: 'wa', phone: '5492216246179', msg: 'Buenas y santas quiero entrenar en Sede Bariloche' },
+                  { name: 'SEDE MAR DEL PLATA', location: 'Plaza Mitre', schedule: 'Miércoles 19:00hs', icon: MapPin, type: 'ig', url: 'https://www.instagram.com/esgrimacriollamdp/' },
+                  { name: 'SEDE BARILOCHE', location: 'Bomberos voluntarios', schedule: 'Lunes y miercoles 18:30hs', icon: MapPin, type: 'ig', url: 'https://www.instagram.com/esgrimabariloche/' },
                   { name: 'VIRTUAL', location: 'Online (Zoom/Meet)', schedule: 'A coordinar', icon: Globe, type: 'wa', phone: '5492216246179', msg: 'Buenas y santas quiero información sobre clases virtuales' }
                 ].map((sede) => (
                   <button

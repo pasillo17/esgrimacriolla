@@ -30,7 +30,7 @@ const LOCATIONS = [
     mapUrl: 'https://maps.app.goo.gl/vQTk5ugv5eXhjrMt9',
     contactUrl: 'https://wa.me/5491162086574?text=Buenas%20y%20santas%2C%20quiero%20solicitar%20informaci%C3%B3n%20sobre%20la%20Sede%20Lanus',
     contactIcon: 'chat',
-    contactText: 'Contactar (WA)'
+    contactText: 'Contactar'
   },
   {
     id: 3,
@@ -43,7 +43,7 @@ const LOCATIONS = [
     mapUrl: 'https://www.google.com/maps/search/?api=1&query=Plaza+Juan+Jose+Paso,+Moldes+1300',
     contactUrl: 'https://wa.me/5491135197663?text=Buenas%20y%20santas%2C%20quiero%20solicitar%20informaci%C3%B3n%20sobre%20la%20Sede%20Belgrano',
     contactIcon: 'chat',
-    contactText: 'Contactar (WA)'
+    contactText: 'Contactar'
   },
   {
     id: 2,
@@ -56,7 +56,7 @@ const LOCATIONS = [
     mapUrl: 'https://www.google.com/maps/search/?api=1&query=Parque+Rivadavia,+CABA',
     contactUrl: 'https://www.instagram.com/esgrimacriolla.caballito/',
     contactIcon: 'camera_alt',
-    contactText: 'Contactar (IG)'
+    contactText: 'Contactar'
   },
   {
     id: 5,
@@ -65,22 +65,22 @@ const LOCATIONS = [
     address: 'Sindicato Gráfico',
     schedule: 'A confirmar',
     image: 'https://images.unsplash.com/photo-1542382156909-9ae37b3f56fd?q=80&w=2056&auto=format&fit=crop',
-    instructor: 'A confirmar',
+    instructor: 'Maestro Jorge Prina',
     mapUrl: 'https://www.google.com/maps/search/?api=1&query=Sindicato+Grafico,+La+Plata',
-    contactUrl: 'https://www.instagram.com/esgrima_criolla',
-    contactIcon: 'camera_alt',
+    contactUrl: 'https://wa.me/5492216246179?text=Buenas%20y%20santas%20quiero%20entrenar%20en%20Sede%20La%20Plata',
+    contactIcon: 'chat',
     contactText: 'Contactar'
   },
   {
     id: 6,
     city: 'Mar del Plata',
     name: 'Sede Mar del Plata',
-    address: 'A confirmar',
-    schedule: 'A confirmar',
+    address: 'Plaza Mitre',
+    schedule: 'Miércoles 19:00hs',
     image: 'https://images.unsplash.com/photo-1596752003714-c3e0618cefa0?q=80&w=2070&auto=format&fit=crop',
-    instructor: 'A confirmar',
-    mapUrl: 'https://www.google.com/maps/search/?api=1&query=Mar+del+Plata',
-    contactUrl: 'https://www.instagram.com/esgrima_criolla',
+    instructor: 'Inst. Sebastián Javier Chehin',
+    mapUrl: 'https://maps.app.goo.gl/yaw1XNoqz1APWRgz6',
+    contactUrl: 'https://www.instagram.com/esgrimacriollamdp/',
     contactIcon: 'camera_alt',
     contactText: 'Contactar'
   },
@@ -88,12 +88,12 @@ const LOCATIONS = [
     id: 7,
     city: 'Bariloche',
     name: 'Sede Bariloche',
-    address: 'A confirmar',
-    schedule: 'A confirmar',
+    address: 'Bomberos voluntarios',
+    schedule: 'Lunes y miercoles 18:30hs',
     image: 'https://images.unsplash.com/photo-1544085311-11a028465b03?q=80&w=2070&auto=format&fit=crop',
-    instructor: 'A confirmar',
-    mapUrl: 'https://www.google.com/maps/search/?api=1&query=Bariloche',
-    contactUrl: 'https://www.instagram.com/esgrima_criolla',
+    instructor: 'Inst. Walter Medel e Ismael De Valle',
+    mapUrl: 'https://www.google.com/maps/search/?api=1&query=Bomberos+voluntarios,+Bariloche',
+    contactUrl: 'https://www.instagram.com/esgrimabariloche/',
     contactIcon: 'camera_alt',
     contactText: 'Contactar'
   }
@@ -128,8 +128,66 @@ const Sedes: React.FC<SedesProps> = ({ onBack }) => {
           </div>
         </RevealOnScroll>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16">
-          {LOCATIONS.map((sede, idx) => (
+        <div className="mb-16 md:mb-24">
+          <RevealOnScroll delay={0}>
+            <div className="group relative bg-card-depth border border-gold/30 p-1 shadow-[0_0_30px_rgba(197,160,101,0.15)] hover:border-gold/50 hover:shadow-[0_0_40px_rgba(197,160,101,0.25)] transition-all duration-500 max-w-xl mx-auto">
+              <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-void border border-gold/40 px-6 py-1 z-10">
+                <span className="font-display text-gold text-[0.6rem] uppercase tracking-[0.4em] font-bold">Sede Principal</span>
+              </div>
+              <div className="relative h-72 md:h-80 overflow-hidden mb-6">
+                <img 
+                  src={LOCATIONS.find(l => l.id === 1)?.image} 
+                  alt={LOCATIONS.find(l => l.id === 1)?.name}
+                  className="w-full h-full object-cover filter sepia-[0.3] contrast-110 opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-1000"
+                />
+                <div className="absolute inset-0 bg-void/20 group-hover:bg-void/0 transition-colors"></div>
+                <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-void to-transparent">
+                  <span className="text-gold font-display text-sm tracking-[0.2em] uppercase font-bold">{LOCATIONS.find(l => l.id === 1)?.city}</span>
+                </div>
+              </div>
+              
+              <div className="px-8 pb-10 text-center">
+                <h3 className="font-display text-2xl text-stone-200 uppercase tracking-[0.2em] mb-2 group-hover:text-gold transition-colors">{LOCATIONS.find(l => l.id === 1)?.name}</h3>
+                <p className="font-serif text-stone-500 text-base italic mb-6">{LOCATIONS.find(l => l.id === 1)?.instructor}</p>
+                
+                <div className="space-y-3 border-t border-gold/10 pt-6">
+                  <div className="flex items-center justify-center gap-3 text-stone-400">
+                    <span className="material-icons-outlined text-gold/60 text-base">location_on</span>
+                    <span className="font-display text-sm tracking-widest uppercase">{LOCATIONS.find(l => l.id === 1)?.address}</span>
+                  </div>
+                  <div className="flex items-center justify-center gap-3 text-stone-400">
+                    <span className="material-icons-outlined text-gold/60 text-base">schedule</span>
+                    <span className="font-display text-sm tracking-widest uppercase">{LOCATIONS.find(l => l.id === 1)?.schedule}</span>
+                  </div>
+                </div>
+
+                <div className="mt-8 flex flex-col sm:flex-row gap-4">
+                  <a 
+                    href={LOCATIONS.find(l => l.id === 1)?.mapUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 py-3 border border-gold/20 text-stone-400 font-display text-[0.7rem] uppercase tracking-[0.3em] hover:bg-gold/5 hover:border-gold/40 hover:text-gold transition-all flex items-center justify-center gap-2"
+                  >
+                    <span className="material-icons-outlined text-sm">map</span>
+                    Ver en Mapa
+                  </a>
+                  <a 
+                    href={LOCATIONS.find(l => l.id === 1)?.contactUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 py-3 bg-gold/10 border border-gold/20 text-gold font-display text-[0.7rem] uppercase tracking-[0.3em] hover:bg-gold/20 hover:border-gold/60 transition-all flex items-center justify-center gap-2"
+                  >
+                    <span className="material-icons-outlined text-sm">{LOCATIONS.find(l => l.id === 1)?.contactIcon}</span>
+                    {LOCATIONS.find(l => l.id === 1)?.contactText}
+                  </a>
+                </div>
+              </div>
+            </div>
+          </RevealOnScroll>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
+          {LOCATIONS.filter(l => l.id !== 1).map((sede, idx) => (
             <RevealOnScroll key={sede.id} delay={idx * 150}>
               <div className="group relative bg-card-depth border border-gold/10 p-1 shadow-2xl hover:border-gold/30 transition-all duration-500">
                 <div className="relative h-64 overflow-hidden mb-6">

@@ -38,7 +38,6 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, isMenuOpen, onToggleMenu })
   const navItems = [
     { name: 'INICIO', href: '#inicio' },
     { name: 'NOSOTROS', href: '#nosotros' },
-    { name: 'HISTORIA', href: '#historia' },
     { name: 'CLASES', href: '#clases' },
     { name: 'SEDES', href: '#sedes' },
     { name: 'ACADEMIA ONLINE', href: '#academia-online' },

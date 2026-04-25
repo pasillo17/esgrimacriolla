@@ -205,23 +205,6 @@ const AcademiaOnline: React.FC<AcademiaOnlineProps> = ({ onBack }) => {
               <p className="font-serif text-stone-300 text-sm md:text-base italic max-w-2xl mx-auto mb-10 leading-relaxed">
                 Nuestros cursos cuentan con el aval académico de la Universidad de Catamarca, garantizando la excelencia educativa en la preservación de nuestra cultura.
               </p>
-              <button 
-                onClick={() => {
-                  const message = `Buenas quiero consultar por la certificación oficial`;
-                  navigator.clipboard.writeText(message).then(() => {
-                    window.open('https://ig.me/m/esgrima_criolla', '_blank');
-                  }).catch(() => {
-                    window.open('https://ig.me/m/esgrima_criolla', '_blank');
-                  });
-                }}
-                className="relative px-10 py-4 bg-void border border-gold/50 text-gold font-display font-bold text-xs uppercase tracking-[0.3em] overflow-hidden group/btn transition-all duration-300 hover:scale-[1.02] hover:bg-gold/10 shadow-[0_0_15px_rgba(212,175,55,0.1)]"
-              >
-                <span className="relative z-10 flex items-center justify-center gap-2">
-                  Consultar Disponibilidad
-                  <span className="material-icons-outlined text-sm group-hover/btn:translate-x-1 transition-transform duration-300">east</span>
-                </span>
-                <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-gold/10 to-transparent group-hover/btn:translate-x-full transition-transform duration-700 ease-in-out"></div>
-              </button>
             </div>
           </div>
         </RevealOnScroll>
