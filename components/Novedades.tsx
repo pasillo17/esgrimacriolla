@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import RevealOnScroll from './RevealOnScroll';
 
 interface NovedadesProps {
@@ -8,39 +8,53 @@ interface NovedadesProps {
 const NEWS = [
   {
     id: 1,
-    title: 'Exhibición en la Rural',
-    date: '15 MAYO 2026',
-    category: 'RECREACIÓN',
+    title: 'Olimpiadas Gauchas',
+    date: 'OCTUBRE 2026',
+    category: 'EVENTO',
     image: 'https://images.unsplash.com/photo-1549416800-47b29e001f3f?q=80&w=1974&auto=format&fit=crop',
-    description: 'Gran demostración de destreza criolla en el predio ferial de Palermo. Nuestros instructores recrearán duelos históricos del siglo XIX.'
+    description: 'Participaremos en la nueva edición de las Olimpiadas Gauchas. Un gran evento lleno de tradición y destreza.',
+    expandedContent: 'Estaremos compitiendo en diversas categorías de nuestra disciplina, demostrando el aprendizaje de todos nuestros estudiantes. Se llevarán a cabo torneos amistosos, demostraciones formales y charlas con maestros invitados. ¡Una oportunidad única para empaparse de nuestra cultura y tradición!'
   },
   {
     id: 2,
-    title: 'Seminario de Facón',
-    date: '02 JUNIO 2026',
-    category: 'CLASE ABIERTA',
+    title: 'Recreación Histórica en Luján',
+    date: '25 MAYO 2026',
+    category: 'RECREACIÓN',
     image: 'https://images.unsplash.com/photo-1519791883288-dc8bd696e667?q=80&w=2070&auto=format&fit=crop',
-    description: 'Jornada intensiva de técnica y práctica en nuestra sede central. Abierto a todo público con inscripción previa.'
+    description: 'Conmemoración del 25 de mayo con una gran recreación histórica en la ciudad de Luján.',
+    expandedContent: 'Acompañaremos los festejos patrios del 25 de mayo vistiendo a la usanza tradicional y realizando combates de exhibición en los alrededores del cabildo de Luján. Habrá desfiles, muestra de armamento de época y explicaciones pedagógicas sobre los duelos históricos.'
   },
   {
     id: 3,
-    title: 'Lanzamiento Libro',
-    date: '20 JUNIO 2026',
+    title: 'Lanzamiento de Libro',
+    date: 'DICIEMBRE 2026',
     category: 'PUBLICACIÓN',
     image: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?q=80&w=1974&auto=format&fit=crop',
-    description: 'Presentación de "El Legado del Acero", la nueva obra de investigación sobre las raíces de nuestra esgrima.'
+    description: 'Presentación del libro "Tratado de el antiguo arte de pelear con facón y poncho" del Maestro Jorge Prina.',
+    expandedContent: 'Un trabajo de investigación profunda que rescata y sistematiza los principios técnicos, tácticos e históricos del combate con facón y poncho. La presentación contará con una firma de ejemplares, una charla introductoria y, por supuesto, demostraciones en vivo de las técnicas abordadas en el ejemplar.'
   },
   {
     id: 4,
-    title: 'Encuentro Nacional',
-    date: '09 JULIO 2026',
-    category: 'EVENTO',
+    title: 'Esgrima Criolla Stream',
+    date: '09 ABRIL 2026',
+    category: 'MULTIMEDIA',
     image: 'https://images.unsplash.com/photo-1514539079130-25950c84af65?q=80&w=2069&auto=format&fit=crop',
-    description: 'Reunión de todas las sedes en Córdoba para celebrar el Día de la Independencia con torneos y camaradería.'
+    description: 'Nuevo capítulo en vivo de nuestro stream oficial. ¡Los esperamos para charlar sobre la historia de nuestra disciplina!',
+    expandedContent: 'No se pierdan nuestra transmisión en vivo. Estaremos repasando las últimas novedades de todas las sedes, analizando técnicas complejas, compartiendo material audiovisual inédito y respondiendo e-mails y el chat en el momento.'
   }
 ];
 
 const Novedades: React.FC<NovedadesProps> = ({ onBack }) => {
+  const [expandedId, setExpandedId] = useState<number | null>(null);
+
+  const toggleExpand = (id: number) => {
+    if (expandedId === id) {
+      setExpandedId(null);
+    } else {
+      setExpandedId(id);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-void text-stone-300 selection:bg-gold selection:text-void paper-texture pt-24 pb-12 overflow-x-hidden">
       {/* Vignette Overlay */}
@@ -101,13 +115,22 @@ const Novedades: React.FC<NovedadesProps> = ({ onBack }) => {
                       {item.title}
                     </h3>
                     
-                    <p className="font-serif text-stone-500 text-sm italic mb-6 leading-relaxed">
+                    <p className="font-serif text-stone-500 text-sm italic mb-6 leading-relaxed flex-1">
                       {item.description}
+                      <span className={`block mt-4 text-stone-400 overflow-hidden transition-all duration-500 ease-in-out ${expandedId === item.id ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
+                        {item.expandedContent}
+                      </span>
                     </p>
                   </div>
 
-                  <button className="self-start text-gold font-display text-[0.6rem] uppercase tracking-[0.3em] hover:text-white transition-colors flex items-center gap-2 group/btn">
-                    Leer Más <span className="material-icons-outlined text-sm group-hover/btn:translate-x-1 transition-transform">east</span>
+                  <button 
+                    onClick={() => toggleExpand(item.id)}
+                    className="self-start text-gold font-display text-[0.6rem] uppercase tracking-[0.3em] hover:text-white transition-colors flex items-center gap-2 group/btn"
+                  >
+                    {expandedId === item.id ? 'Ver Menos' : 'Leer Más'}
+                    <span className={`material-icons-outlined text-sm transition-transform ${expandedId === item.id ? '' : 'group-hover/btn:translate-x-1'}`}>
+                      {expandedId === item.id ? 'keyboard_arrow_up' : 'east'}
+                    </span>
                   </button>
                 </div>
 

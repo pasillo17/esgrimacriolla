@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import RevealOnScroll from './RevealOnScroll';
 
 interface SedesProps {
@@ -6,6 +6,7 @@ interface SedesProps {
 }
 
 const LOCATIONS = [
+
   {
     id: 1,
     city: 'Buenos Aires',
@@ -99,7 +100,70 @@ const LOCATIONS = [
   }
 ];
 
+const SedeCard = ({ sede }: { sede: typeof LOCATIONS[0] }) => (
+  <div className="group relative bg-gradient-to-b from-[#2A1D13] to-card-depth border border-gold/10 p-1 shadow-2xl hover:border-gold/30 transition-all duration-500 rounded-sm">
+    <div className="relative h-64 overflow-hidden mb-6">
+      <img 
+        src={sede.image} 
+        alt={sede.name}
+        className="w-full h-full object-cover filter sepia-[0.3] contrast-110 opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-1000"
+      />
+      <div className="absolute inset-0 bg-void/20 group-hover:bg-void/0 transition-colors"></div>
+      <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-void to-transparent">
+        <span className="text-gold font-display text-xs tracking-[0.2em] uppercase font-bold">{sede.city}</span>
+      </div>
+    </div>
+    
+    <div className="px-6 pb-8 text-center">
+      <h3 className="font-display text-xl text-stone-200 uppercase tracking-[0.2em] mb-2 group-hover:text-gold transition-colors">{sede.name}</h3>
+      <p className="font-serif text-stone-500 text-sm italic mb-6">{sede.instructor}</p>
+      
+      <div className="space-y-3 border-t border-gold/10 pt-6">
+        <div className="flex items-center justify-center gap-3 text-stone-400">
+          <span className="material-icons-outlined text-gold/60 text-sm">location_on</span>
+          <span className="font-display text-xs tracking-widest uppercase">{sede.address}</span>
+        </div>
+        <div className="flex items-center justify-center gap-3 text-stone-400 mt-2">
+          <span className="material-icons-outlined text-gold/60 text-sm">schedule</span>
+          <span className="font-display text-[0.6rem] sm:text-[0.65rem] xl:text-[0.7rem] tracking-wider md:tracking-widest uppercase whitespace-nowrap">{sede.schedule}</span>
+        </div>
+      </div>
+
+      <div className="mt-8 flex flex-col gap-4">
+        <a 
+          href={sede.mapUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="w-full py-3 border border-gold/20 text-stone-400 font-display text-[0.6rem] uppercase tracking-[0.3em] hover:bg-gold/5 hover:border-gold/40 hover:text-gold transition-all flex items-center justify-center gap-2"
+        >
+          <span className="material-icons-outlined text-sm">map</span>
+          Ver en Mapa
+        </a>
+        <a 
+          href={sede.contactUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="w-full py-3 bg-gold/10 border border-gold/20 text-gold font-display text-[0.6rem] uppercase tracking-[0.3em] hover:bg-gold/20 hover:border-gold/60 transition-all flex items-center justify-center gap-2"
+        >
+          <span className="material-icons-outlined text-sm">{sede.contactIcon}</span>
+          {sede.contactText}
+        </a>
+      </div>
+    </div>
+  </div>
+);
+
 const Sedes: React.FC<SedesProps> = ({ onBack }) => {
+  const [mobileIndex, setMobileIndex] = useState(0);
+  const otherLocations = LOCATIONS.filter(l => l.id !== 1);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setMobileIndex((prev) => (prev + 1) % otherLocations.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, [otherLocations.length]);
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#0f0a05] to-[#1a1108] text-stone-300 selection:bg-gold selection:text-void pt-24 pb-12 overflow-x-hidden">
       {/* Grain Overlay */}
@@ -186,61 +250,37 @@ const Sedes: React.FC<SedesProps> = ({ onBack }) => {
           </RevealOnScroll>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
-          {LOCATIONS.filter(l => l.id !== 1).map((sede, idx) => (
+        <div className="hidden md:grid grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12 pb-12">
+          {otherLocations.map((sede, idx) => (
             <RevealOnScroll key={sede.id} delay={idx * 150}>
-              <div className="group relative bg-gradient-to-b from-[#2A1D13] to-card-depth border border-gold/10 p-1 shadow-2xl hover:border-gold/30 transition-all duration-500 rounded-sm">
-                <div className="relative h-64 overflow-hidden mb-6">
-                  <img 
-                    src={sede.image} 
-                    alt={sede.name}
-                    className="w-full h-full object-cover filter sepia-[0.3] contrast-110 opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-1000"
-                  />
-                  <div className="absolute inset-0 bg-void/20 group-hover:bg-void/0 transition-colors"></div>
-                  <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-void to-transparent">
-                    <span className="text-gold font-display text-xs tracking-[0.2em] uppercase font-bold">{sede.city}</span>
-                  </div>
-                </div>
-                
-                <div className="px-6 pb-8 text-center">
-                  <h3 className="font-display text-xl text-stone-200 uppercase tracking-[0.2em] mb-2 group-hover:text-gold transition-colors">{sede.name}</h3>
-                  <p className="font-serif text-stone-500 text-sm italic mb-6">{sede.instructor}</p>
-                  
-                  <div className="space-y-3 border-t border-gold/10 pt-6">
-                    <div className="flex items-center justify-center gap-3 text-stone-400">
-                      <span className="material-icons-outlined text-gold/60 text-sm">location_on</span>
-                      <span className="font-display text-xs tracking-widest uppercase">{sede.address}</span>
-                    </div>
-                    <div className="flex items-center justify-center gap-3 text-stone-400 mt-2">
-                      <span className="material-icons-outlined text-gold/60 text-sm">schedule</span>
-                      <span className="font-display text-[0.6rem] sm:text-[0.65rem] xl:text-[0.7rem] tracking-wider md:tracking-widest uppercase whitespace-nowrap">{sede.schedule}</span>
-                    </div>
-                  </div>
-
-                  <div className="mt-8 flex flex-col gap-4">
-                    <a 
-                      href={sede.mapUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-full py-3 border border-gold/20 text-stone-400 font-display text-[0.6rem] uppercase tracking-[0.3em] hover:bg-gold/5 hover:border-gold/40 hover:text-gold transition-all flex items-center justify-center gap-2"
-                    >
-                      <span className="material-icons-outlined text-sm">map</span>
-                      Ver en Mapa
-                    </a>
-                    <a 
-                      href={sede.contactUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-full py-3 bg-gold/10 border border-gold/20 text-gold font-display text-[0.6rem] uppercase tracking-[0.3em] hover:bg-gold/20 hover:border-gold/60 transition-all flex items-center justify-center gap-2"
-                    >
-                      <span className="material-icons-outlined text-sm">{sede.contactIcon}</span>
-                      {sede.contactText}
-                    </a>
-                  </div>
-                </div>
-              </div>
+              <SedeCard sede={sede} />
             </RevealOnScroll>
           ))}
+        </div>
+
+        {/* Mobile Carousel */}
+        <div className="md:hidden relative overflow-hidden pb-12 pt-4 px-2">
+          <div 
+            className="flex transition-transform duration-700 ease-in-out" 
+            style={{ transform: `translateX(-${mobileIndex * 100}%)` }}
+          >
+            {otherLocations.map((sede) => (
+              <div key={sede.id} className="w-full flex-shrink-0 px-2 box-border">
+                <SedeCard sede={sede} />
+              </div>
+            ))}
+          </div>
+          
+          <div className="flex justify-center gap-3 mt-8">
+            {otherLocations.map((_, idx) => (
+              <button 
+                key={idx} 
+                onClick={() => setMobileIndex(idx)}
+                className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${mobileIndex === idx ? 'bg-gold w-6' : 'bg-gold/30'}`}
+                aria-label={`Ir a sede ${idx + 1}`}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </div>
