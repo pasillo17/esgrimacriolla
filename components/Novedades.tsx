@@ -20,7 +20,7 @@ const NEWS = [
     title: 'Recreación Histórica en Luján',
     date: '25 MAYO 2026',
     category: 'RECREACIÓN',
-    image: 'https://images.unsplash.com/photo-1519791883288-dc8bd696e667?q=80&w=2070&auto=format&fit=crop',
+    image: 'https://i.imgur.com/Ml54xka.jpeg',
     description: 'Conmemoración del 25 de mayo con una gran recreación histórica en la ciudad de Luján.',
     expandedContent: 'Acompañaremos los festejos patrios del 25 de mayo vistiendo a la usanza tradicional y realizando combates de exhibición en los alrededores del cabildo de Luján. Habrá desfiles, muestra de armamento de época y explicaciones pedagógicas sobre los duelos históricos.'
   },
