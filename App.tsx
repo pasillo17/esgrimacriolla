@@ -131,6 +131,24 @@ const App: React.FC = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const handleNavigate = (view: 'home' | 'merch' | 'sedes' | 'academia-online' | 'novedades', hash?: string) => {
+    setCurrentView(view);
+    setIsMenuOpen(false);
+    
+    if (hash) {
+      setTimeout(() => {
+        const element = document.querySelector(hash);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        } else if (hash === '#inicio') {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      }, 100);
+    } else {
+       window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
   return (
     <div className="min-h-screen bg-void text-stone-300 selection:bg-gold selection:text-void paper-texture overflow-x-hidden">
       <AnimatePresence>
@@ -232,10 +250,7 @@ const App: React.FC = () => {
       <div className="fixed inset-0 pointer-events-none z-40 bg-grain opacity-5 mix-blend-overlay"></div>
       
       <Header 
-        onNavigate={(view) => {
-          setCurrentView(view);
-          setIsMenuOpen(false);
-        }} 
+        onNavigate={handleNavigate} 
         isMenuOpen={isMenuOpen}
         onToggleMenu={() => setIsMenuOpen(!isMenuOpen)}
       />
@@ -828,7 +843,7 @@ const App: React.FC = () => {
         </div>
       )}
 
-      <AIHistorian />
+      <AIHistorian onNavigate={handleNavigate} />
       </div>
     </div>
   );

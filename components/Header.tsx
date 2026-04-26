@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Menu, X } from 'lucide-react';
 
 interface HeaderProps {
-  onNavigate: (view: 'home' | 'merch' | 'sedes' | 'academia-online' | 'novedades') => void;
+  onNavigate: (view: 'home' | 'merch' | 'sedes' | 'academia-online' | 'novedades', hash?: string) => void;
   isMenuOpen: boolean;
   onToggleMenu: () => void;
 }
@@ -22,16 +22,7 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, isMenuOpen, onToggleMenu })
     } else if (href === '#novedades') {
       onNavigate('novedades');
     } else {
-      onNavigate('home');
-      // Small timeout to allow view change before scrolling if needed
-      setTimeout(() => {
-        const element = document.querySelector(href);
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
-        } else if (href === '#inicio') {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-      }, 100);
+      onNavigate('home', href);
     }
   };
 

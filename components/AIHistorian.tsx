@@ -4,7 +4,11 @@ import { motion, AnimatePresence } from 'motion/react';
 import { historianService } from '../services/geminiService';
 import { ChatMessage } from '../types';
 
-const AIHistorian: React.FC = () => {
+interface AIHistorianProps {
+  onNavigate?: (view: 'home' | 'merch' | 'sedes' | 'academia-online' | 'novedades', hash?: string) => void;
+}
+
+const AIHistorian: React.FC<AIHistorianProps> = ({ onNavigate }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState('');
@@ -32,6 +36,54 @@ const AIHistorian: React.FC = () => {
     setIsLoading(false);
   };
 
+  const renderMessageContent = (content: string) => {
+    // Parser for [ACTION:text|href] syntax
+    const regex = /\[ACTION:([^\|]+)\|([^\]]+)\]/g;
+    const parts = [];
+    let lastIndex = 0;
+    let match;
+
+    while ((match = regex.exec(content)) !== null) {
+      if (match.index > lastIndex) {
+        parts.push(content.substring(lastIndex, match.index));
+      }
+      
+      const buttonText = match[1];
+      const link = match[2];
+      
+      parts.push(
+        <div key={`action-${match.index}`} className="block mt-3 mb-1">
+          <button 
+            type="button"
+            onClick={() => {
+               setIsOpen(false);
+               if (onNavigate) {
+                 if (link === '#merch') onNavigate('merch');
+                 else if (link === '#sedes') onNavigate('sedes');
+                 else if (link === '#academia-online') onNavigate('academia-online');
+                 else if (link === '#novedades') onNavigate('novedades');
+                 else {
+                   onNavigate('home', link);
+                 }
+               }
+            }}
+            className="inline-flex items-center gap-2 px-4 py-2 bg-stone-900 border border-stone-800 text-[#E8DCC5] font-display text-[0.65rem] uppercase tracking-[0.2em] hover:bg-stone-800 transition-colors shadow-sm"
+          >
+            {buttonText}
+            <span className="material-icons-outlined text-[0.8rem]">arrow_forward</span>
+          </button>
+        </div>
+      );
+      lastIndex = regex.lastIndex;
+    }
+    
+    if (lastIndex < content.length) {
+      parts.push(content.substring(lastIndex));
+    }
+
+    return <>{parts.map((part, i) => <React.Fragment key={i}>{typeof part === 'string' ? part : part}</React.Fragment>)}</>;
+  };
+
   return (
     <div className="fixed bottom-8 right-8 z-[60]">
       <AnimatePresence>
@@ -44,10 +96,10 @@ const AIHistorian: React.FC = () => {
           >
             <div className="p-5 border-b border-stone-900/10 bg-[#E8DCC5] flex justify-between items-center relative">
               <div className="flex items-center gap-3">
-                <span className="material-icons-outlined text-stone-900 text-lg">history_edu</span>
+                <span className="material-icons-outlined text-stone-900 text-lg">support_agent</span>
                 <div className="flex flex-col">
-                  <span className="font-display text-[0.7rem] tracking-[0.3em] text-stone-900 font-bold">EL HISTORIADOR</span>
-                  <span className="text-[0.5rem] tracking-widest text-stone-700 uppercase font-bold">Crónicas y Tradición</span>
+                  <span className="font-display text-[0.7rem] tracking-[0.3em] text-stone-900 font-bold">PREGUNTAS FRECUENTES</span>
+                  <span className="text-[0.5rem] tracking-widest text-stone-700 uppercase font-bold">Asistente Virtual</span>
                 </div>
               </div>
               <button onClick={() => setIsOpen(false)} className="text-stone-600 hover:text-stone-900 transition-colors">
@@ -59,9 +111,9 @@ const AIHistorian: React.FC = () => {
               <div className="absolute inset-0 bg-grain opacity-10 pointer-events-none"></div>
               {messages.length === 0 && (
                 <div className="text-center py-20 px-8 relative z-10">
-                  <span className="material-icons-outlined text-stone-800/50 text-5xl mb-6">menu_book</span>
+                  <span className="material-icons-outlined text-stone-800/50 text-5xl mb-6">live_help</span>
                   <p className="text-xs italic text-stone-700 leading-relaxed font-medium">
-                    "Bienvenido, forastero. Si busca saber de facones, duelos de honor o la vida del gaucho, hable que yo guardo la historia."
+                    "Buenas y santas. Estoy aquí para responder sus consultas sobre nuestras sedes, horarios y modalidades de entrenamiento."
                   </p>
                 </div>
               )}
@@ -75,9 +127,9 @@ const AIHistorian: React.FC = () => {
                   <div className={`max-w-[90%] p-4 text-[0.75rem] leading-relaxed relative shadow-sm ${
                     msg.role === 'user' 
                       ? 'bg-white/80 border border-stone-900/10 text-stone-900 rounded-sm italic font-medium' 
-                      : 'bg-[#E8DCC5] border-l-2 border-stone-900/40 text-stone-800 font-serif font-medium'
+                      : 'bg-[#E8DCC5] border-l-2 border-stone-900/40 text-stone-800 font-serif font-medium whitespace-pre-wrap'
                   }`}>
-                    {msg.content}
+                    {msg.role === 'user' ? msg.content : renderMessageContent(msg.content)}
                   </div>
                 </motion.div>
               ))}
@@ -99,7 +151,7 @@ const AIHistorian: React.FC = () => {
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-                  placeholder="Pregunte sobre la destreza..."
+                  placeholder="Consulte sobre sedes y horarios..."
                   className="w-full bg-white/50 border border-stone-900/10 py-3 px-4 pr-12 text-xs text-stone-900 focus:outline-none focus:border-stone-900/30 placeholder:text-stone-500 rounded-sm transition-all font-medium"
                 />
                 <button 
@@ -123,7 +175,7 @@ const AIHistorian: React.FC = () => {
         className="w-16 h-16 rounded-full bg-[#E8DCC5] border-2 border-stone-900/10 flex items-center justify-center text-stone-900 shadow-lg hover:border-stone-900/30 hover:shadow-xl transition-all group relative overflow-hidden shine-effect"
       >
         <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-        <span className="material-icons-outlined group-hover:rotate-12 transition-transform relative z-10 text-2xl">history_edu</span>
+        <span className="material-icons-outlined group-hover:rotate-12 transition-transform relative z-10 text-2xl">support_agent</span>
         <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-800 rounded-full animate-pulse shadow-sm"></div>
       </motion.button>
     </div>
