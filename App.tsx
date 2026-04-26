@@ -96,6 +96,60 @@ const CustomCursor: React.FC = () => {
   );
 };
 
+const CLASSES_LIST = [
+  {
+    id: '01',
+    title: 'Esgrima de Duelo',
+    desc: 'Técnica pura de combate singular. Geometría y distancia en el arte del acero.',
+    icon: 'gps_fixed',
+    img: 'https://i.imgur.com/s65N47d.jpeg',
+    desktopClasses: 'md:col-span-8 md:row-span-2'
+  },
+  {
+    id: '02',
+    title: 'El Uso del Poncho',
+    desc: 'Engaño, defensa y control de la visión enemiga. El escudo del gaucho.',
+    icon: 'waves',
+    img: 'https://i.imgur.com/tQQRD6x.jpeg',
+    desktopClasses: 'md:col-span-4 md:row-span-3'
+  },
+  {
+    id: '03',
+    title: 'Táctica Criolla',
+    desc: 'Sistemas de defensa personal en situaciones reales.',
+    icon: 'shield',
+    img: 'https://i.imgur.com/d8AbAg9.jpeg',
+    desktopClasses: 'md:col-span-4 md:row-span-2'
+  },
+  {
+    id: '04',
+    title: 'Cultura e Historia',
+    desc: 'Tradición, historia y cultura del arte marcial argentino.',
+    icon: 'auto_stories',
+    img: 'https://i.imgur.com/0xAYDbQ.jpeg',
+    desktopClasses: 'md:col-span-4 md:row-span-2'
+  }
+];
+
+const ClassCard = ({ item }: { item: typeof CLASSES_LIST[0] }) => (
+  <div className="group relative h-full min-h-[400px] md:min-h-[300px] overflow-hidden border border-gold/10 rounded-sm bg-card-depth flex flex-col justify-end p-10 hover:border-gold/30 transition-all duration-700">
+    <div className="absolute inset-0 z-0">
+      <img 
+        src={item.img} 
+        alt={item.title} 
+        className="w-full h-full object-cover filter sepia-[0.2] contrast-125 opacity-40 group-hover:opacity-60 group-hover:scale-105 transition-all duration-1000"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-void via-void/40 to-transparent"></div>
+    </div>
+    <div className="relative z-10 max-w-lg">
+      <span className="material-icons-outlined text-gold text-4xl mb-8 block">{item.icon}</span>
+      <h3 className="font-display text-stone-100 text-3xl md:text-2xl uppercase tracking-[0.1em] mb-4 md:mb-6">{item.title}</h3>
+      <p className="text-stone-400 text-lg md:text-sm font-serif italic leading-relaxed opacity-100 md:opacity-0 md:group-hover:opacity-100 md:translate-y-4 md:group-hover:translate-y-0 transition-all duration-700">{item.desc}</p>
+    </div>
+    <div className="absolute top-10 right-10 text-gold/20 font-display text-7xl md:text-8xl select-none">{item.id}</div>
+  </div>
+);
+
 const App: React.FC = () => {
   const [isLoadingApp, setIsLoadingApp] = useState(true);
   const [currentView, setCurrentView] = useState<'home' | 'merch' | 'sedes' | 'academia-online' | 'novedades'>('home');
@@ -105,8 +159,19 @@ const App: React.FC = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [showScrollTop, setShowScrollTop] = useState(false);
 
+  const [mobileClassIndex, setMobileClassIndex] = useState(0);
+
   React.useEffect(() => {
     window.scrollTo(0, 0);
+  }, [currentView]);
+
+  React.useEffect(() => {
+    if (currentView === 'home') {
+      const timer = setInterval(() => {
+        setMobileClassIndex((prev) => (prev + 1) % 4);
+      }, 4000);
+      return () => clearInterval(timer);
+    }
   }, [currentView]);
 
   React.useEffect(() => {
@@ -492,93 +557,42 @@ const App: React.FC = () => {
                   </div>
                 </RevealOnScroll>
 
-                <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 h-auto md:h-[900px]">
-                  {/* Class 1: Large Feature */}
-                  <div className="md:col-span-8 md:row-span-2">
-                    <RevealOnScroll direction="left" className="h-full">
-                      <div className="group relative h-full min-h-[400px] overflow-hidden border border-gold/10 rounded-sm bg-card-depth flex flex-col justify-end p-10 hover:border-gold/30 transition-all duration-700">
-                        <div className="absolute inset-0 z-0">
-                          <img 
-                            src="https://i.imgur.com/s65N47d.jpeg" 
-                            alt="Esgrima de Duelo" 
-                            className="w-full h-full object-cover filter sepia-[0.2] contrast-125 opacity-40 group-hover:opacity-60 group-hover:scale-105 transition-all duration-1000"
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-void via-void/40 to-transparent"></div>
-                        </div>
-                        <div className="relative z-10 max-w-lg">
-                          <span className="material-icons-outlined text-gold text-4xl mb-8 block">gps_fixed</span>
-                          <h3 className="font-display text-stone-100 text-3xl md:text-4xl uppercase tracking-[0.1em] mb-6">Esgrima de Duelo</h3>
-                          <p className="text-stone-400 text-lg font-serif italic leading-relaxed opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-700">Técnica pura de combate singular. Geometría y distancia en el arte del acero.</p>
-                        </div>
-                        <div className="absolute top-10 right-10 text-gold/20 font-display text-8xl select-none">01</div>
+                {/* Desktop Grid */}
+                <div className="hidden md:grid grid-cols-12 gap-6 md:gap-8 md:h-[900px]">
+                  {CLASSES_LIST.map((cls, idx) => {
+                    const directions = ['left', 'right', 'up', 'up'];
+                    return (
+                      <div key={cls.id} className={cls.desktopClasses}>
+                        <RevealOnScroll direction={directions[idx] as any} className="h-full">
+                          <ClassCard item={cls} />
+                        </RevealOnScroll>
                       </div>
-                    </RevealOnScroll>
-                  </div>
+                    );
+                  })}
+                </div>
 
-                  {/* Class 2: Tall Side */}
-                  <div className="md:col-span-4 md:row-span-3">
-                    <RevealOnScroll direction="right" className="h-full">
-                      <div className="group relative h-full min-h-[400px] overflow-hidden border border-gold/10 rounded-sm bg-card-depth flex flex-col justify-end p-10 hover:border-gold/30 transition-all duration-700">
-                        <div className="absolute inset-0 z-0">
-                          <img 
-                            src="https://i.imgur.com/tQQRD6x.jpeg" 
-                            alt="El Uso del Poncho" 
-                            className="w-full h-full object-cover filter sepia-[0.2] contrast-125 opacity-40 group-hover:opacity-60 group-hover:scale-105 transition-all duration-1000"
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-void via-void/40 to-transparent"></div>
-                        </div>
-                        <div className="relative z-10">
-                          <span className="material-icons-outlined text-gold text-4xl mb-8 block">waves</span>
-                          <h3 className="font-display text-stone-100 text-2xl md:text-3xl uppercase tracking-[0.1em] mb-6">El Uso del Poncho</h3>
-                          <p className="text-stone-400 text-base font-serif italic leading-relaxed opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-700">Engaño, defensa y control de la visión enemiga. El escudo del gaucho.</p>
-                        </div>
-                        <div className="absolute top-10 right-10 text-gold/20 font-display text-8xl select-none">02</div>
+                {/* Mobile Carousel */}
+                <div className="md:hidden relative overflow-hidden pb-8 px-2 mx-auto w-full">
+                  <div 
+                    className="flex transition-transform duration-700 ease-in-out"
+                    style={{ transform: `translateX(-${mobileClassIndex * 100}%)` }}
+                  >
+                    {CLASSES_LIST.map((cls) => (
+                      <div key={cls.id} className="w-full flex-shrink-0 px-2 box-border">
+                        <ClassCard item={cls} />
                       </div>
-                    </RevealOnScroll>
+                    ))}
                   </div>
-
-                  {/* Class 3: Bottom Left */}
-                  <div className="md:col-span-4 md:row-span-2">
-                    <RevealOnScroll direction="up" className="h-full">
-                      <div className="group relative h-full min-h-[300px] overflow-hidden border border-gold/10 rounded-sm bg-card-depth flex flex-col justify-end p-10 hover:border-gold/30 transition-all duration-700">
-                        <div className="absolute inset-0 z-0">
-                          <img 
-                            src="https://i.imgur.com/d8AbAg9.jpeg" 
-                            alt="Táctica Criolla" 
-                            className="w-full h-full object-cover filter sepia-[0.2] contrast-125 opacity-40 group-hover:opacity-60 group-hover:scale-105 transition-all duration-1000"
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-void via-void/40 to-transparent"></div>
-                        </div>
-                        <div className="relative z-10">
-                          <span className="material-icons-outlined text-gold text-4xl mb-8 block">shield</span>
-                          <h3 className="font-display text-stone-100 text-2xl uppercase tracking-[0.1em] mb-4">Táctica Criolla</h3>
-                          <p className="text-stone-400 text-sm font-serif italic leading-relaxed opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-700">Sistemas de defensa personal en situaciones reales.</p>
-                        </div>
-                        <div className="absolute top-10 right-10 text-gold/20 font-display text-7xl select-none">03</div>
-                      </div>
-                    </RevealOnScroll>
-                  </div>
-
-                  {/* Class 4: Bottom Center */}
-                  <div className="md:col-span-4 md:row-span-2">
-                    <RevealOnScroll direction="up" className="h-full">
-                      <div className="group relative h-full min-h-[300px] overflow-hidden border border-gold/10 rounded-sm bg-card-depth flex flex-col justify-end p-10 hover:border-gold/30 transition-all duration-700">
-                        <div className="absolute inset-0 z-0">
-                          <img 
-                            src="https://i.imgur.com/0xAYDbQ.jpeg" 
-                            alt="Cultura e Historia" 
-                            className="w-full h-full object-cover filter sepia-[0.2] contrast-125 opacity-40 group-hover:opacity-60 group-hover:scale-105 transition-all duration-1000"
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-void via-void/40 to-transparent"></div>
-                        </div>
-                        <div className="relative z-10">
-                          <span className="material-icons-outlined text-gold text-4xl mb-8 block">auto_stories</span>
-                          <h3 className="font-display text-stone-100 text-2xl uppercase tracking-[0.1em] mb-4">Cultura e Historia</h3>
-                          <p className="text-stone-400 text-sm font-serif italic leading-relaxed opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-700">Tradición, historia y cultura del arte marcial argentino.</p>
-                        </div>
-                        <div className="absolute top-10 right-10 text-gold/20 font-display text-7xl select-none">04</div>
-                      </div>
-                    </RevealOnScroll>
+                  
+                  <div className="flex justify-center gap-3 mt-6">
+                    {CLASSES_LIST.map((_, idx) => (
+                      <button 
+                        key={idx} 
+                        onClick={() => setMobileClassIndex(idx)}
+                        className={`w-2 h-2 rounded-full transition-all duration-300 ${mobileClassIndex === idx ? 'bg-gold w-6' : 'bg-gold/30'}`}
+                        aria-label={`Clase ${idx + 1}`}
+                      />
+                    ))}
                   </div>
                 </div>
 
