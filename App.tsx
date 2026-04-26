@@ -589,7 +589,7 @@ const App: React.FC = () => {
                       <div className="absolute -inset-4 border border-gold/20 scale-90 group-hover:scale-100 opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
                       
                       <button 
-                        onClick={() => setIsAdmissionModalOpen(true)}
+                        onClick={() => handleNavigate('sedes')}
                         className="relative px-12 sm:px-20 py-8 bg-gradient-to-r from-[#C5A065] via-[#E8D19F] to-[#C5A065] text-void font-display font-black text-sm md:text-base uppercase tracking-[0.4em] sm:tracking-[0.6em] hover:scale-110 transition-all duration-500 shadow-[0_0_50px_rgba(197,160,101,0.6)] hover:shadow-[0_0_100px_rgba(197,160,101,1)] overflow-hidden group border-b-4 border-[#8A6D3B]"
                       >
                         {/* Guardapampa detail on button - Top and Bottom */}
@@ -613,6 +613,7 @@ const App: React.FC = () => {
                         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/80 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out"></div>
                       </button>
                     </div>
+
                     <p className="mt-12 text-[0.6rem] md:text-[0.7rem] text-stone-600 tracking-[0.5em] uppercase italic font-bold">Admisión bajo estricto código de conducta.</p>
                   </div>
                 </RevealOnScroll>

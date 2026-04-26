@@ -101,10 +101,7 @@ const LOCATIONS = [
 
 const Sedes: React.FC<SedesProps> = ({ onBack }) => {
   return (
-    <div className="min-h-screen bg-void text-stone-300 selection:bg-gold selection:text-void paper-texture pt-24 pb-12 overflow-x-hidden">
-      {/* Vignette Overlay */}
-      <div className="fixed inset-0 pointer-events-none z-50 vignette-overlay opacity-60"></div>
-      
+    <div className="min-h-screen bg-gradient-to-b from-[#0f0a05] to-[#1a1108] text-stone-300 selection:bg-gold selection:text-void pt-24 pb-12 overflow-x-hidden">
       {/* Grain Overlay */}
       <div className="fixed inset-0 pointer-events-none z-40 bg-grain opacity-5 mix-blend-overlay"></div>
 
@@ -130,9 +127,9 @@ const Sedes: React.FC<SedesProps> = ({ onBack }) => {
 
         <div className="mb-16 md:mb-24">
           <RevealOnScroll delay={0}>
-            <div className="group relative bg-card-depth border border-gold/30 p-1 shadow-[0_0_30px_rgba(197,160,101,0.15)] hover:border-gold/50 hover:shadow-[0_0_40px_rgba(197,160,101,0.25)] transition-all duration-500 max-w-xl mx-auto">
-              <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-void border border-gold/40 px-6 py-1 z-10">
-                <span className="font-display text-gold text-[0.6rem] uppercase tracking-[0.4em] font-bold">Sede Principal</span>
+            <div className="group relative bg-gradient-to-b from-[#2A1D13] to-card-depth border border-gold/30 p-1 shadow-[0_0_30px_rgba(197,160,101,0.15)] hover:border-gold/50 hover:shadow-[0_0_40px_rgba(197,160,101,0.25)] transition-all duration-500 max-w-xl mx-auto rounded-sm mt-8 sm:mt-0">
+              <div className="absolute -top-4 sm:-top-4 left-1/2 -translate-x-1/2 bg-void border border-gold/40 px-6 py-1.5 z-10 whitespace-nowrap flex items-center justify-center">
+                <span className="font-display text-gold text-[0.6rem] uppercase tracking-[0.4em] pl-[0.4em] font-bold text-center">Sede Principal</span>
               </div>
               <div className="relative h-72 md:h-80 overflow-hidden mb-6 group/video">
                 {/* Image Placeholder that transitions out when hovered, or just replace with video */}
@@ -192,7 +189,7 @@ const Sedes: React.FC<SedesProps> = ({ onBack }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
           {LOCATIONS.filter(l => l.id !== 1).map((sede, idx) => (
             <RevealOnScroll key={sede.id} delay={idx * 150}>
-              <div className="group relative bg-card-depth border border-gold/10 p-1 shadow-2xl hover:border-gold/30 transition-all duration-500">
+              <div className="group relative bg-gradient-to-b from-[#2A1D13] to-card-depth border border-gold/10 p-1 shadow-2xl hover:border-gold/30 transition-all duration-500 rounded-sm">
                 <div className="relative h-64 overflow-hidden mb-6">
                   <img 
                     src={sede.image} 
