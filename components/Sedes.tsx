@@ -11,12 +11,12 @@ const LOCATIONS = [
     city: 'Buenos Aires',
     name: 'Sede Central (Montal Gym)',
     address: 'Mitre 1851, CABA',
-    schedule: 'Sábados 10:00 - 12:00',
+    schedule: 'Sábados 10:00-12:00',
     image: 'https://images.unsplash.com/photo-1543429776-2782fc8e1acd?q=80&w=2070&auto=format&fit=crop',
     instructor: 'Maestro Jorge Prina',
     mapUrl: 'https://www.google.com/maps/search/?api=1&query=Mitre+1851,+CABA',
     contactUrl: 'https://www.instagram.com/esgrima_criolla',
-    contactIcon: 'camera_alt',
+    contactIcon: 'chat',
     contactText: 'Contactar'
   },
   {
@@ -24,7 +24,7 @@ const LOCATIONS = [
     city: 'Lanus',
     name: 'Sede Zona Sur',
     address: 'Gym ESN, Enrique Fernandez 2066',
-    schedule: 'Mar y Jue 8:30hs • Lun y Vie 19:00hs',
+    schedule: 'Mar y Jue 08:30-10:00 • Lun 19:00-20:30',
     image: 'https://www.lanus.gob.ar/storage/fichas/multimedia/dji-0046-0dcHp.JPG',
     instructor: 'Inst. Augusto Miranda',
     mapUrl: 'https://maps.app.goo.gl/vQTk5ugv5eXhjrMt9',
@@ -37,7 +37,7 @@ const LOCATIONS = [
     city: 'Belgrano',
     name: 'Sede Belgrano',
     address: 'Plaza Juan Jose Paso, Moldes 1300',
-    schedule: 'Jueves 19:00 - 21:00',
+    schedule: 'Jueves 19:00-21:00',
     image: 'https://upload.wikimedia.org/wikipedia/commons/2/28/Plaza_Juan_Jos%C3%A9_Paso.jpg',
     instructor: 'Inst. Eliseo Dulon',
     mapUrl: 'https://www.google.com/maps/search/?api=1&query=Plaza+Juan+Jose+Paso,+Moldes+1300',
@@ -50,12 +50,12 @@ const LOCATIONS = [
     city: 'Caballito',
     name: 'Sede Caballito',
     address: 'Parque Rivadavia, CABA ',
-    schedule: 'Miercoles 19:00 - 20:00',
+    schedule: 'Miércoles 19:00-20:00',
     image: 'https://turismo.buenosaires.gob.ar/sites/turismo/files/parque_rivadavia_1200_0.jpg',
     instructor: 'Inst. Luisina Montero',
     mapUrl: 'https://www.google.com/maps/search/?api=1&query=Parque+Rivadavia,+CABA',
     contactUrl: 'https://www.instagram.com/esgrimacriolla.caballito/',
-    contactIcon: 'camera_alt',
+    contactIcon: 'chat',
     contactText: 'Contactar'
   },
   {
@@ -63,7 +63,7 @@ const LOCATIONS = [
     city: 'La Plata',
     name: 'Sede La Plata',
     address: 'Sindicato Gráfico',
-    schedule: 'A confirmar',
+    schedule: 'Jueves 19:00-20:30',
     image: 'https://turismo.laplata.gob.ar/img/la-ciudad/plaza_morenocatedral-1024x684.jpg',
     instructor: 'Maestro Jorge Prina',
     mapUrl: 'https://www.google.com/maps/search/?api=1&query=Sindicato+Grafico,+La+Plata',
@@ -76,12 +76,12 @@ const LOCATIONS = [
     city: 'Mar del Plata',
     name: 'Sede Mar del Plata',
     address: 'Plaza Mitre',
-    schedule: 'Miércoles 19:00hs',
+    schedule: 'Miércoles 19:00-20:30',
     image: 'https://cdn-italiani-media.italiani.it/site-mardelplata/2019/09/Plaza-Mitre-Mar-del-Plata-1000x600.jpg',
     instructor: 'Inst. Sebastián Javier Chehin',
     mapUrl: 'https://maps.app.goo.gl/yaw1XNoqz1APWRgz6',
     contactUrl: 'https://www.instagram.com/esgrimacriollamdp/',
-    contactIcon: 'camera_alt',
+    contactIcon: 'chat',
     contactText: 'Contactar'
   },
   {
@@ -89,12 +89,12 @@ const LOCATIONS = [
     city: 'Bariloche',
     name: 'Sede Bariloche',
     address: 'Bomberos voluntarios',
-    schedule: 'Lunes y miercoles 18:30hs',
-    image: 'https://elcordillerano-s3.cdn.net.ar/s3i233/2023/07/elcordillerano/images/09/31/93178_26c0325dac87333eceaaceb45f0a945d3aaa3db6a8983226601cac5dde15a26b/md.webp',
+    schedule: 'Lunes y Miércoles 18:30-20:00',
+    image: 'https://www.latamairlines.com/content/dam/latamxp/sites/vamos-latam/news-nieve-sudam%C3%A9rica-may25/bariloche/Modelo-1.png',
     instructor: 'Inst. Walter Medel e Ismael De Valle',
     mapUrl: 'https://www.google.com/maps/search/?api=1&query=Bomberos+voluntarios,+Bariloche',
     contactUrl: 'https://www.instagram.com/esgrimabariloche/',
-    contactIcon: 'camera_alt',
+    contactIcon: 'chat',
     contactText: 'Contactar'
   }
 ];
@@ -211,9 +211,9 @@ const Sedes: React.FC<SedesProps> = ({ onBack }) => {
                       <span className="material-icons-outlined text-gold/60 text-sm">location_on</span>
                       <span className="font-display text-xs tracking-widest uppercase">{sede.address}</span>
                     </div>
-                    <div className="flex items-center justify-center gap-3 text-stone-400">
+                    <div className="flex items-center justify-center gap-3 text-stone-400 mt-2">
                       <span className="material-icons-outlined text-gold/60 text-sm">schedule</span>
-                      <span className="font-display text-xs tracking-widest uppercase">{sede.schedule}</span>
+                      <span className="font-display text-[0.6rem] sm:text-[0.65rem] xl:text-[0.7rem] tracking-wider md:tracking-widest uppercase whitespace-nowrap">{sede.schedule}</span>
                     </div>
                   </div>
 
