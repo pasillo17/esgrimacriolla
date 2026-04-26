@@ -155,6 +155,32 @@ const SedeCard = ({ sede }: { sede: typeof LOCATIONS[0] }) => (
 
 const Sedes: React.FC<SedesProps> = ({ onBack }) => {
   const [mobileIndex, setMobileIndex] = useState(0);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  
+  const minSwipeDistance = 50;
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e: React.TouchEvent) => setTouchEnd(e.targetTouches[0].clientX);
+
+  const onTouchEndHandler = () => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+
+    if (isLeftSwipe) {
+      setMobileIndex((prev) => (prev + 1) % otherLocations.length);
+    }
+    if (isRightSwipe) {
+      setMobileIndex((prev) => (prev - 1 + otherLocations.length) % otherLocations.length);
+    }
+  };
+
   const otherLocations = LOCATIONS.filter(l => l.id !== 1);
 
   useEffect(() => {
@@ -162,7 +188,7 @@ const Sedes: React.FC<SedesProps> = ({ onBack }) => {
       setMobileIndex((prev) => (prev + 1) % otherLocations.length);
     }, 4000);
     return () => clearInterval(timer);
-  }, [otherLocations.length]);
+  }, [otherLocations.length, mobileIndex]);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#0f0a05] to-[#1a1108] text-stone-300 selection:bg-gold selection:text-void pt-24 pb-12 overflow-x-hidden">
@@ -259,7 +285,12 @@ const Sedes: React.FC<SedesProps> = ({ onBack }) => {
         </div>
 
         {/* Mobile Carousel */}
-        <div className="md:hidden relative overflow-hidden pb-12 pt-4 px-2">
+        <div 
+          className="md:hidden relative overflow-hidden pb-12 pt-4 px-2"
+          onTouchStart={onTouchStart}
+          onTouchMove={onTouchMove}
+          onTouchEnd={onTouchEndHandler}
+        >
           <div 
             className="flex transition-transform duration-700 ease-in-out" 
             style={{ transform: `translateX(-${mobileIndex * 100}%)` }}

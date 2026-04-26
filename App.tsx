@@ -160,6 +160,29 @@ const App: React.FC = () => {
   const [showScrollTop, setShowScrollTop] = useState(false);
 
   const [mobileClassIndex, setMobileClassIndex] = useState(0);
+  const [touchStartClass, setTouchStartClass] = useState<number | null>(null);
+  const [touchEndClass, setTouchEndClass] = useState<number | null>(null);
+
+  const onTouchStartClass = (e: React.TouchEvent) => {
+    setTouchEndClass(null);
+    setTouchStartClass(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMoveClass = (e: React.TouchEvent) => setTouchEndClass(e.targetTouches[0].clientX);
+
+  const onTouchEndClassHandler = () => {
+    if (!touchStartClass || !touchEndClass) return;
+    const distance = touchStartClass - touchEndClass;
+    const isLeftSwipe = distance > 50;
+    const isRightSwipe = distance < -50;
+
+    if (isLeftSwipe) {
+      setMobileClassIndex((prev) => (prev + 1) % CLASSES_LIST.length);
+    }
+    if (isRightSwipe) {
+      setMobileClassIndex((prev) => (prev - 1 + CLASSES_LIST.length) % CLASSES_LIST.length);
+    }
+  };
 
   React.useEffect(() => {
     window.scrollTo(0, 0);
@@ -172,7 +195,7 @@ const App: React.FC = () => {
       }, 4000);
       return () => clearInterval(timer);
     }
-  }, [currentView]);
+  }, [currentView, mobileClassIndex]);
 
   React.useEffect(() => {
     // Simulate loading for professional feel
@@ -321,12 +344,20 @@ const App: React.FC = () => {
       />
       
       <div className={`transition-opacity duration-300 ${isMenuOpen ? 'opacity-10 pointer-events-none blur-sm' : 'opacity-100'}`}>
-        {currentView === 'home' ? (
-        <>
-          <main className="relative z-20">
-            <div id="inicio">
-              <Hero />
-            </div>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentView}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
+          >
+            {currentView === 'home' ? (
+              <>
+                <main className="relative z-20">
+                  <div id="inicio">
+                    <Hero />
+                  </div>
 
             {/* Core Pillars - Nuestra Estructura */}
             <section id="estructura" className="py-10 md:py-24 bg-void relative overflow-hidden border-b border-gold/5">
@@ -572,7 +603,12 @@ const App: React.FC = () => {
                 </div>
 
                 {/* Mobile Carousel */}
-                <div className="md:hidden relative overflow-hidden pb-8 px-2 mx-auto w-full">
+                <div 
+                  className="md:hidden relative overflow-hidden pb-8 px-2 mx-auto w-full"
+                  onTouchStart={onTouchStartClass}
+                  onTouchMove={onTouchMoveClass}
+                  onTouchEnd={onTouchEndClassHandler}
+                >
                   <div 
                     className="flex transition-transform duration-700 ease-in-out"
                     style={{ transform: `translateX(-${mobileClassIndex * 100}%)` }}
@@ -749,17 +785,18 @@ const App: React.FC = () => {
             <div className="guardapampa-divider absolute bottom-0 left-0 w-full opacity-20 animate-guardapampa"></div>
           </footer>
         </>
-      ) : currentView === 'merch' ? (
-        <Merch onBack={() => setCurrentView('home')} />
-      ) : currentView === 'sedes' ? (
-        <Sedes onBack={() => setCurrentView('home')} />
-      ) : currentView === 'academia-online' ? (
-        <AcademiaOnline onBack={() => setCurrentView('home')} />
-      ) : (
-        <Novedades onBack={() => setCurrentView('home')} />
-      )}
-
-      {/* Admission Modal - NEW ELEGANT INTERFACE */}
+            ) : currentView === 'merch' ? (
+              <Merch onBack={() => setCurrentView('home')} />
+            ) : currentView === 'sedes' ? (
+              <Sedes onBack={() => setCurrentView('home')} />
+            ) : currentView === 'academia-online' ? (
+              <AcademiaOnline onBack={() => setCurrentView('home')} />
+            ) : (
+              <Novedades onBack={() => setCurrentView('home')} />
+            )}
+          </motion.div>
+        </AnimatePresence>
+      </div>
       {isAdmissionModalOpen && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-void/95 backdrop-blur-xl">
           <motion.div 
@@ -859,7 +896,6 @@ const App: React.FC = () => {
       )}
 
       <AIHistorian onNavigate={handleNavigate} />
-      </div>
     </div>
   );
 };

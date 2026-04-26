@@ -11,7 +11,7 @@ const NEWS = [
     title: 'Olimpiadas Gauchas',
     date: 'OCTUBRE 2026',
     category: 'EVENTO',
-    image: 'https://images.unsplash.com/photo-1549416800-47b29e001f3f?q=80&w=1974&auto=format&fit=crop',
+    image: 'https://i.imgur.com/RzVG7xU.jpeg',
     description: 'Participaremos en la nueva edición de las Olimpiadas Gauchas. Un gran evento lleno de tradición y destreza.',
     expandedContent: 'Estaremos compitiendo en diversas categorías de nuestra disciplina, demostrando el aprendizaje de todos nuestros estudiantes. Se llevarán a cabo torneos amistosos, demostraciones formales y charlas con maestros invitados. ¡Una oportunidad única para empaparse de nuestra cultura y tradición!'
   },
@@ -29,7 +29,7 @@ const NEWS = [
     title: 'Lanzamiento de Libro',
     date: 'DICIEMBRE 2026',
     category: 'PUBLICACIÓN',
-    image: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?q=80&w=1974&auto=format&fit=crop',
+    image: 'https://i.imgur.com/xzi5sUa.jpeg',
     description: 'Presentación del libro "Tratado de el antiguo arte de pelear con facón y poncho" del Maestro Jorge Prina.',
     expandedContent: 'Un trabajo de investigación profunda que rescata y sistematiza los principios técnicos, tácticos e históricos del combate con facón y poncho. La presentación contará con una firma de ejemplares, una charla introductoria y, por supuesto, demostraciones en vivo de las técnicas abordadas en el ejemplar.'
   },
@@ -38,7 +38,7 @@ const NEWS = [
     title: 'Esgrima Criolla Stream',
     date: '09 ABRIL 2026',
     category: 'MULTIMEDIA',
-    image: 'https://images.unsplash.com/photo-1514539079130-25950c84af65?q=80&w=2069&auto=format&fit=crop',
+    image: 'https://i.imgur.com/z6Fdi0X.jpeg',
     description: 'Nuevo capítulo en vivo de nuestro stream oficial. ¡Los esperamos para charlar sobre la historia de nuestra disciplina!',
     expandedContent: 'No se pierdan nuestra transmisión en vivo. Estaremos repasando las últimas novedades de todas las sedes, analizando técnicas complejas, compartiendo material audiovisual inédito y respondiendo e-mails y el chat en el momento.'
   }
