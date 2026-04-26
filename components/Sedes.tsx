@@ -25,7 +25,7 @@ const LOCATIONS = [
     name: 'Sede Zona Sur',
     address: 'Gym ESN, Enrique Fernandez 2066',
     schedule: 'Mar y Jue 8:30hs • Lun y Vie 19:00hs',
-    image: 'https://images.unsplash.com/photo-1589909202802-8f4aadce1849?q=80&w=1935&auto=format&fit=crop',
+    image: 'https://www.lanus.gob.ar/storage/fichas/multimedia/dji-0046-0dcHp.JPG',
     instructor: 'Inst. Augusto Miranda',
     mapUrl: 'https://maps.app.goo.gl/vQTk5ugv5eXhjrMt9',
     contactUrl: 'https://wa.me/5491162086574?text=Buenas%20y%20santas%2C%20quiero%20solicitar%20informaci%C3%B3n%20sobre%20la%20Sede%20Lanus',
@@ -64,7 +64,7 @@ const LOCATIONS = [
     name: 'Sede La Plata',
     address: 'Sindicato Gráfico',
     schedule: 'A confirmar',
-    image: 'https://images.unsplash.com/photo-1542382156909-9ae37b3f56fd?q=80&w=2056&auto=format&fit=crop',
+    image: 'https://turismo.laplata.gob.ar/img/la-ciudad/plaza_morenocatedral-1024x684.jpg',
     instructor: 'Maestro Jorge Prina',
     mapUrl: 'https://www.google.com/maps/search/?api=1&query=Sindicato+Grafico,+La+Plata',
     contactUrl: 'https://wa.me/5492216246179?text=Buenas%20y%20santas%20quiero%20entrenar%20en%20Sede%20La%20Plata',
@@ -77,7 +77,7 @@ const LOCATIONS = [
     name: 'Sede Mar del Plata',
     address: 'Plaza Mitre',
     schedule: 'Miércoles 19:00hs',
-    image: 'https://images.unsplash.com/photo-1596752003714-c3e0618cefa0?q=80&w=2070&auto=format&fit=crop',
+    image: 'https://cdn-italiani-media.italiani.it/site-mardelplata/2019/09/Plaza-Mitre-Mar-del-Plata-1000x600.jpg',
     instructor: 'Inst. Sebastián Javier Chehin',
     mapUrl: 'https://maps.app.goo.gl/yaw1XNoqz1APWRgz6',
     contactUrl: 'https://www.instagram.com/esgrimacriollamdp/',
@@ -90,7 +90,7 @@ const LOCATIONS = [
     name: 'Sede Bariloche',
     address: 'Bomberos voluntarios',
     schedule: 'Lunes y miercoles 18:30hs',
-    image: 'https://images.unsplash.com/photo-1544085311-11a028465b03?q=80&w=2070&auto=format&fit=crop',
+    image: 'https://elcordillerano-s3.cdn.net.ar/s3i233/2023/07/elcordillerano/images/09/31/93178_26c0325dac87333eceaaceb45f0a945d3aaa3db6a8983226601cac5dde15a26b/md.webp',
     instructor: 'Inst. Walter Medel e Ismael De Valle',
     mapUrl: 'https://www.google.com/maps/search/?api=1&query=Bomberos+voluntarios,+Bariloche',
     contactUrl: 'https://www.instagram.com/esgrimabariloche/',
@@ -134,14 +134,17 @@ const Sedes: React.FC<SedesProps> = ({ onBack }) => {
               <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-void border border-gold/40 px-6 py-1 z-10">
                 <span className="font-display text-gold text-[0.6rem] uppercase tracking-[0.4em] font-bold">Sede Principal</span>
               </div>
-              <div className="relative h-72 md:h-80 overflow-hidden mb-6">
-                <img 
-                  src={LOCATIONS.find(l => l.id === 1)?.image} 
-                  alt={LOCATIONS.find(l => l.id === 1)?.name}
-                  className="w-full h-full object-cover filter sepia-[0.3] contrast-110 opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-1000"
-                />
-                <div className="absolute inset-0 bg-void/20 group-hover:bg-void/0 transition-colors"></div>
-                <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-void to-transparent">
+              <div className="relative h-72 md:h-80 overflow-hidden mb-6 group/video">
+                {/* Image Placeholder that transitions out when hovered, or just replace with video */}
+                <iframe 
+                  className="w-full h-full object-cover"
+                  src="https://www.youtube.com/embed/p_MVjDzK4v8?autoplay=1&mute=1&controls=0&loop=1&playlist=p_MVjDzK4v8&vq=hd1080" 
+                  title="Esgrima Criolla Sede Central" 
+                  frameBorder="0" 
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                  allowFullScreen
+                ></iframe>
+                <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-void to-transparent pointer-events-none">
                   <span className="text-gold font-display text-sm tracking-[0.2em] uppercase font-bold">{LOCATIONS.find(l => l.id === 1)?.city}</span>
                 </div>
               </div>
